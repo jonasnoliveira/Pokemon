@@ -77,20 +77,20 @@ function HomePage() {
     <div>
       <Nav />
       <div className="flex justify-center p-4">
-        <Button>
+        <Button className="bg-red-600 w-8 max-sm:w-7 flex items-center justify-center">
           <FaRegHeart />
         </Button>
         <input
-          className="w-48 mx-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="w-48 max-sm:w-7/12 mx-4 max-sm:mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={query}
           onChange={inputHandler}
-          placeholder="Pesquise o nome"
+          placeholder="Pesquise seu Pokemon"
         />
-        <Button className="w-28 h-10 bg-blue-600" onClick={search}>
+        <Button className="w-28 max-sm:w-20 h-10 text-white bg-blue-600 hover:bg-blue-800" onClick={search}>
           Pesquisar
         </Button>
       </div>
-      <div className="grid mx-16 grid-cols-6 gap-6">
+      <div className="grid justify-center mx-8 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6">
         {pokemons && pokemons.length > 0 ? (
           pokemons.map((item) => (
             <PokemonCard
