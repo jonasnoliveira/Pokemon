@@ -4,7 +4,7 @@ import Nav from "components/Nav/Nav";
 import { Pokemon, Request } from "interface";
 import React, { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
-import Api from "service/Api";
+import Api from "Service/Api";
 
 function HomePage() {
   const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
