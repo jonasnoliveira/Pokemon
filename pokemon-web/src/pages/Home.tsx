@@ -1,15 +1,15 @@
 import { Button } from "@material-tailwind/react";
 import PokemonCard from "components/Card/PokemonCard";
-import { Pagination } from "components/Pagination";
-import Sidebar from "components/Side/Side";
+import Nav from "components/Nav/Nav";
 import { Pokemon, Request } from "interface";
 import React, { useEffect, useState } from "react";
+import { FaRegHeart } from "react-icons/fa";
 import Api from "service/Api";
 
 function HomePage() {
+  const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [offset, setOffset] = useState(0);
-  const [count, setCount] = useState(0);
   const limit = 198;
 
   function next() {
@@ -29,7 +29,7 @@ function HomePage() {
       );
       const { results } = response.data;
 
-      const payloadPokeemons = await Promise.all(
+      const payloadPokemons = await Promise.all(
         results.map(async (pokemon: Pokemon) => {
           const { id, types } = await getMoreInfo(pokemon.url);
 
@@ -40,11 +40,12 @@ function HomePage() {
           };
         })
       );
-      setPokemons(payloadPokeemons);
+      setAllPokemons(payloadPokemons);
+      setPokemons(payloadPokemons);
     }
 
     getAllPokemons();
-  }, [offset, setCount]);
+  }, [offset]);
 
   const [query, setQuery] = useState("");
 
@@ -54,21 +55,11 @@ function HomePage() {
   };
 
   const search = () => {
-    let foundName = pokemons.filter((item) =>
+    let foundName = allPokemons.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
     console.log("foundName", foundName);
-    // let foundId = pokemons.filter((item) => {
-    //   item.id.toString().includes(query.toLowerCase());
-    // });
-    // console.log("foundId", foundId);
-    let foundTypes = pokemons.filter((item) =>
-      item.types.map((pokemonType) => {
-        pokemonType.type.name.includes(query.toLowerCase());
-      })
-    );
-    console.log("foundTypes", foundTypes);
-    // let foundItems = [...foundName, ...foundId, ...foundTypes];
+
     setPokemons(foundName);
   };
 
@@ -84,16 +75,18 @@ function HomePage() {
 
   return (
     <div>
-      <Sidebar />
-      <div className="p-4">
+      <Nav />
+      <div className="flex justify-center p-4">
+        <Button>
+          <FaRegHeart />
+        </Button>
         <input
           className="w-48 mx-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={query}
           onChange={inputHandler}
           placeholder="Pesquise o nome"
         />
-
-        <Button className="w-28 bg-blue-600" onClick={search}>
+        <Button className="w-28 h-10 bg-blue-600" onClick={search}>
           Pesquisar
         </Button>
       </div>
@@ -108,11 +101,11 @@ function HomePage() {
             />
           ))
         ) : (
-          <h2>Pokemon não encontrado</h2>
+          <h2>Pokemon não encontrado!</h2>
         )}
       </div>
       <div className="text-center">
-        <div className="inline-flex items-center mt-5">
+        <div className="inline-flex items-center my-5">
           <button
             className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             onClick={prev}

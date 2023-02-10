@@ -15,8 +15,3 @@ export type Request = {
   id: number;
   types: PokemonTypes[];
 };
-
-export type Page = {
-  next: () => {} | null;
-  prev: () => {} | null;
-};
