@@ -11,14 +11,42 @@ import { FaHeart } from "react-icons/fa";
 export default function PokemonCard(props: Pokemon) {
   const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${props.id}.png`;
 
+  function Favorite() {
+    let getFavorite: any = [];
+    let local = localStorage.getItem("Favorite");
+
+    if (local !== null) {
+      local = JSON.parse(local);
+      if (typeof local?.[0] === "object") {
+        getFavorite = local;
+      }
+    }
+
+    let favorite: Pokemon = props;
+
+    let listFavorites;
+
+    if (getFavorite.length > 0) {
+      listFavorites = [...getFavorite, favorite];
+    } else {
+      listFavorites = [favorite];
+    }
+
+    localStorage.setItem("Favorite", JSON.stringify(listFavorites));
+    props.favorites();
+  }
+
   return (
-    <Card className="w-68 max-sm:w-64 block border-2 shadow-primaryDark border-blue-400 hover:border-blue-700">
-      <CardHeader color="blue" className="relative h-40">
+    <Card className="w-68 max-sm:w-64 block border-2 rounded-md shadow-lg shadow-primaryDark border-blue-400 hover:border-blue-700">
+      <CardHeader color="blue" className="relative h-40 shadow-none">
         <div className="flex flex-row items-center justify-between">
           <Typography variant="h5" className="m-2 text-black">
             #{props.id}
           </Typography>
-          <Button className="bg-red-600 w-6 h-6 flex items-center justify-center hover:text-red-600 hover:bg-white focus:text-red-600 focus:bg-white">
+          <Button
+            className="bg-red-600 w-6 h-6 flex items-center justify-center hover:text-red-600 hover:bg-white focus:text-red-600 focus:bg-white"
+            onClick={Favorite}
+          >
             <FaHeart />
           </Button>
         </div>

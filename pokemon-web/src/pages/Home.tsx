@@ -10,7 +10,23 @@ function HomePage() {
   const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [offset, setOffset] = useState(0);
+  const [favorite, setFavorite] = useState("");
   const limit = 198;
+
+  function countFavorites() {
+    let getFavorite = localStorage.getItem("Favorite");
+    let countGetFavorite: any = "0";
+    if (getFavorite !== null) {
+      getFavorite = JSON.parse(getFavorite);
+      countGetFavorite = getFavorite?.length;
+    } else {
+      countGetFavorite = "0";
+    }
+
+    let newFavorite = countGetFavorite;
+
+    setFavorite(newFavorite);
+  }
 
   function next() {
     const newOffset = offset + limit;
@@ -19,7 +35,6 @@ function HomePage() {
   function prev() {
     const newOffset = offset - limit;
     setOffset(newOffset);
-    console.log(newOffset);
   }
 
   useEffect(() => {
@@ -45,7 +60,7 @@ function HomePage() {
     }
 
     getAllPokemons();
-  }, [offset]);
+  }, [offset, setFavorite]);
 
   const [query, setQuery] = useState("");
 
@@ -58,7 +73,6 @@ function HomePage() {
     let foundName = allPokemons.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
-    console.log("foundName", foundName);
 
     setPokemons(foundName);
   };
@@ -77,7 +91,8 @@ function HomePage() {
     <div>
       <Nav />
       <div className="flex justify-center p-4">
-        <Button className="bg-red-600 w-8 max-sm:w-7 flex items-center justify-center">
+        <Button className="bg-red-600 w-8 max-sm:w-7 hover:shadow-lg hover:shadow-red-700 flex items-center justify-center">
+          {favorite}
           <FaRegHeart />
         </Button>
         <input
@@ -86,7 +101,10 @@ function HomePage() {
           onChange={inputHandler}
           placeholder="Pesquise seu Pokemon"
         />
-        <Button className="w-28 max-sm:w-20 h-10 text-white bg-blue-600 hover:bg-blue-800" onClick={search}>
+        <Button
+          className="w-28 max-sm:w-20 h-10 text-white bg-blue-600 hover:bg-blue-800"
+          onClick={search}
+        >
           Pesquisar
         </Button>
       </div>
@@ -98,6 +116,7 @@ function HomePage() {
               name={item.name}
               url={item.url}
               types={item.types}
+              favorites={countFavorites}
             />
           ))
         ) : (

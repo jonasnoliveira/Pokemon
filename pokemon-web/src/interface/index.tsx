@@ -9,6 +9,7 @@ export type Pokemon = {
   name: string;
   url: string;
   types: PokemonTypes[];
+  favorites: any;
 };
 
 export type Request = {
