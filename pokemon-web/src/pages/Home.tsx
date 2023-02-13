@@ -4,6 +4,7 @@ import Nav from "components/Nav/Nav";
 import { Pokemon, Request } from "interface";
 import React, { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Api from "Service/Api";
 
 function HomePage() {
@@ -91,10 +92,12 @@ function HomePage() {
     <div>
       <Nav />
       <div className="flex justify-center p-4">
-        <Button className="bg-red-600 w-8 max-sm:w-7 hover:shadow-lg hover:shadow-red-700 flex items-center justify-center">
-          {favorite}
-          <FaRegHeart />
-        </Button>
+        <Link to='/favorites'>
+          <Button className="bg-red-600 w-8 max-sm:w-7 hover:shadow-lg hover:shadow-red-700 flex items-center justify-center">
+            {favorite}
+            <FaRegHeart />
+          </Button>
+        </Link>
         <input
           className="w-48 max-sm:w-7/12 mx-4 max-sm:mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={query}
