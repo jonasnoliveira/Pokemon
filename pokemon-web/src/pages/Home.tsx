@@ -84,7 +84,6 @@ function HomePage() {
         item.type.name.toString().includes(query.toLowerCase())
       )
     );
-    console.log("foundType", foundType);
 
     let founds = [...foundName, ...foundID, ...foundType];
 
