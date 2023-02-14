@@ -1,9 +1,6 @@
-import { Button } from "@material-tailwind/react";
 import PokemonCard from "components/Card/PokemonCard";
 import Nav from "components/Nav/Nav";
-import { Pokemon, PokemonTypes } from "interface";
-import { useEffect, useState } from "react";
-import { FaRegHeart } from "react-icons/fa";
+import { Pokemon} from "interface";
 
 export default function FavoritePage() {
   function getPokemons() {
