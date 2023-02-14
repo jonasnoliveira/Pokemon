@@ -1,5 +1,6 @@
 import { Button } from "@material-tailwind/react";
 import PokemonCard from "components/Card/PokemonCard";
+import Loading from "components/Loading/Loading";
 import Nav from "components/Nav/Nav";
 import { Pokemon, Request } from "interface";
 import React, { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ function HomePage() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [offset, setOffset] = useState(0);
   const [favorite, setFavorite] = useState("");
+  const [loading, setLoading] = useState(false);
   const limit = 198;
 
   function countFavorites() {
@@ -33,6 +35,7 @@ function HomePage() {
     const newOffset = offset + limit;
     setOffset(newOffset);
   }
+
   function prev() {
     const newOffset = offset - limit;
     setOffset(newOffset);
@@ -58,6 +61,7 @@ function HomePage() {
       );
       setAllPokemons(payloadPokemons);
       setPokemons(payloadPokemons);
+      setLoading(true);
     }
 
     getAllPokemons();
@@ -122,6 +126,9 @@ function HomePage() {
         >
           Pesquisar
         </Button>
+      </div>
+      <div className="text-center">
+      {!loading && <Loading/>}
       </div>
       <div className="grid justify-center mx-8 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6">
         {pokemons && pokemons.length > 0 ? (
