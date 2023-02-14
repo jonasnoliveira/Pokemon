@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 
 export default function FavoritePage() {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-
   function getPokemons() {
     let getFavorite: any = [];
 
@@ -19,14 +17,11 @@ export default function FavoritePage() {
       }
     }
     return getFavorite;
-    console.log(getFavorite);
   }
 
   let pokemon = getPokemons();
 
   getPokemons();
-
-  useEffect(() => {}, []);
 
   return (
     <div>
@@ -34,18 +29,12 @@ export default function FavoritePage() {
       <div className="grid justify-center mx-8 my-4 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6">
         {pokemon && pokemon.length > 0 ? (
           pokemon.map(
-            (item: {
-              id: number;
-              name: string;
-              url: string;
-              types: PokemonTypes[];
-            }) => (
+            (item: Pokemon) => (
               <PokemonCard
                 id={item.id}
                 name={item.name}
                 url={item.url}
                 types={item.types}
-                favorites={0}
               />
             )
           )

@@ -75,7 +75,20 @@ function HomePage() {
       item.name.toLowerCase().includes(query.toLowerCase())
     );
 
-    setPokemons(foundName);
+    let foundID = allPokemons.filter((item) =>
+      item.id.toString().includes(query.toLowerCase())
+    );
+
+    let foundType = allPokemons.filter((item) =>
+      item.types.find((item) =>
+        item.type.name.toString().includes(query.toLowerCase())
+      )
+    );
+    console.log("foundType", foundType);
+
+    let founds = [...foundName, ...foundID, ...foundType];
+
+    setPokemons(founds);
   };
 
   async function getMoreInfo(url: string): Promise<Request> {
@@ -92,8 +105,8 @@ function HomePage() {
     <div>
       <Nav />
       <div className="flex justify-center p-4">
-        <Link to='/favorites'>
-          <Button className="bg-red-600 w-8 max-sm:w-7 hover:shadow-lg hover:shadow-red-700 flex items-center justify-center">
+        <Link to="/favorites">
+          <Button className="bg-red-600 w-10 h-10 max-sm:w-7 hover:shadow-lg hover:shadow-red-700 flex items-center justify-center">
             {favorite}
             <FaRegHeart />
           </Button>
